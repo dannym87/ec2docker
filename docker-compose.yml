@@ -1,0 +1,34 @@
+version: '2'
+
+services:
+  data:
+    image: mysql:5.7.12
+    volumes:
+      - /var/lib/mysql
+    command: /bin/true
+
+  app:
+    build: .
+    working_dir: /var/www/html/app
+    ports:
+      - 8000:80
+      - 44300:443
+    environment:
+      - MYSQL_HOST
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_DATABASE
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7.12
+    ports:
+      - 3306
+    volumes_from:
+      - data
+    environment:
+      - MYSQL_USER
+      - MYSQL_PASSWORD
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
