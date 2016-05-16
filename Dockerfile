@@ -10,6 +10,9 @@ RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 573BFD6B3D8FBC64107
       && apt-get clean && apt-get purge \
       && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql
+
 # App code
 COPY ./app /var/www/html/app
 
